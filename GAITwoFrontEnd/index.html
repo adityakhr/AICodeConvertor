@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertor</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.30.0/min/vs/editor/editor.main.css">
+</head>
+<body>
+    <div id="main">
+        <h1>...Welcome to Code Convertor...</h1>
+    </div>
+    <div class="button">
+        <select id="select">
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="JavaScript">JavaScript</option>
+        </select>
+        <button id="one">Convert</button>
+        <button id="two">Debug</button>
+        <button id="three">Quality Check</button>
+    </div>
+    <div id="container">
+        <div id="input">
+            <div id="editor-container"></div>
+        </div>
+        
+        <div id="answer">
+            <p id="ans"></p>
+        </div>
+    </div>
+</body>
+<script src="./index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.30.0/min/vs/loader.js"></script>
+  <script>
+    localStorage.setItem("userinput", JSON.stringify("console.log(hello world)"));
+    // Initialize Monaco Editor 
+    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.30.0/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+      var editor = monaco.editor.create(document.getElementById('editor-container'), {
+        value: `console.log("hello world")`
+      });
+      
+      editor.onDidChangeModelContent(function(el){
+        let userTypedValue = editor.getValue();
+        localStorage.setItem("userinput", JSON.stringify(userTypedValue));
+        console.log("User-typed Value:", userTypedValue); 
+      });
+    });
+  </script>
+</html>
